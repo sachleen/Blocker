@@ -1,0 +1,77 @@
+a, a:visited { color: #747883; text-decoration: none; }
+a:hover { text-decoration: underline; color:#000; }
+body {
+    margin: 0;
+    font: 14px arial;
+    background-color: #ddd;
+    color:#222;
+    -webkit-user-select: none;
+}
+
+.center {
+    text-align: center;
+}
+
+#main {
+    margin: 10px auto;
+    padding:10px;
+    width: 500px;
+    border-radius: 10px;
+    border: 2px solid #CCC;
+    background-color: #FFF;
+}
+
+#main h1 {
+    text-align: center;
+    margin:0;
+}
+
+#main h2 {
+    font-size: 18px;
+    margin:0;
+}
+
+.group {
+    border-bottom: 2px dashed #DDD;
+    margin-bottom: 10px;
+    padding: 5px 0;
+}
+
+button.big {
+    width:100%;
+    font-size: 18px;
+    font-weight: bold;
+    line-height:30px;
+}
+
+textarea, input {
+    width: 490px;
+    line-height:20px;
+}
+
+textarea { height: 160px; }
+
+#footer {
+    font-size: 12px;
+    text-align: right;
+}
+
+pre {
+    display: inline;
+}
+
+#blockedPage #main, #disablePage #main {
+    margin-top:15%;
+}
+#blockedPage #disableLink {
+    position: absolute;
+    bottom:10px;
+    right:10px;
+}
+#disablePage #code, #userCodeEntry {
+    overflow:auto;
+    letter-spacing: 2px;
+    font-family:Courier;
+    font-size:18px;
+    text-align: center;
+}

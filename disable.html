@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Disable Blocer</title>
+    <script type="text/javascript" src="js.js"></script>
+    <link rel="stylesheet" type="text/css" href="css.css" media="screen" /> 
+</head>
+<body id="disablePage">
+    <div id="main">
+        <br /><br />
+        <h1 id="header">Are you sure?</h1>
+        <br />
+        <div class="center">Enter the code in the box below to disable blocker.</div>
+        <br />
+        <div class="center" id="code"></div>
+        <input type="text" onkeyup="checkCode()" id="userCodeEntry" />
+        <br /><br /><br />
+    </div>
+    <script type="text/javascript">
+        var redirect = gup("url");
+
+        var code = makeCode(get("keyLength", 15));
+        $("code").innerHTML = code
+        function checkCode()
+        {
+            var text = $("userCodeEntry").value;
+            if(code.length == text.length)
+            {
+                if(code == text)
+                {
+                    $("userCodeEntry").style.backgroundColor="white"
+                    $("header").innerHTML = "Blocker disabled..."
+                    set("blockerEnabled", false)
+
+                    location.href = redirect
+                    /*if(redirect != "options")
+                        location.href = redirect
+                    else
+                        chrome.tabs.getCurrent(function(tab){ chrome.tabs.remove(tab.id); })
+                    */
+                }
+                else
+                {
+                    $("userCodeEntry").style.backgroundColor="red"
+                }
+            }
+            else
+                $("userCodeEntry").style.backgroundColor="white"
+        }
+    </script>
+</body>
+</html>

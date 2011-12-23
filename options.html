@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blocker Options</title>
+    <link rel="stylesheet" type="text/css" href="css.css" media="screen" /> 
+    <script type="text/javascript" src="js.js"></script>
+    <script type="text/javascript">
+        // if user enables it from the Page Action while the options page is still open...
+        setInterval(checkStatus, 1000);
+        var currentStatus = get("blockerEnabled", false)
+        function checkStatus()
+        {
+            if(get("blockerEnabled", false) != currentStatus)
+            {
+                save();
+                loadOptions();
+                currentStatus = get("blockerEnabled", false)
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="main">
+        <h1>Blocker Options</h1>
+        <div class="group">
+            <h2 id="statusText">Status: Enabled</h2>
+            <button class="big" id="statusButton" onclick="toggleStatus(); loadOptions();">Click to Disable</button>
+        </div>
+		
+		<div class="group">
+            <h2>Blocked message:</h2>
+            <input type="text" id="blockText" />
+			
+			<h2>Key length:</h2>
+			<input type="text" id="keyLength" name="keyLength" value="15"/>
+			<small>length of code you have to enter to disable blocker</small>
+        </div>
+        
+        <div class="group">
+            <h2>Blocked URLs:</h2>
+            <textarea id="blacklist"></textarea>
+			<small>
+				The blacklist supports <a href="http://www.regular-expressions.info/">Regular Expression</a> matching.<br />
+				Make sure to include a ^ (shift + 6) infront of the URL if you don't want to match anywhere in URL.<br />
+				Entering <pre>http://www.facebook.com</pre> into the blacklist will block all pages that have that string in the URL.<br />
+				However, entering <pre>^http://www.facebook.com</pre> will only match URLs that <strong>begin</strong> with <pre>http://www.facebook.com</pre>
+			</small>
+            <button class="big" id="saveBlacklist" onclick="save(); loadOptions();">Save</button>
+        </div>
+		
+        <div id="footer">
+            <a href="http://sachleen.com">sachleen.com</a>
+        </div>
+    </div>
+    <script type="text/javascript">
+        loadOptions();
+    </script>
+</body>
+</html>

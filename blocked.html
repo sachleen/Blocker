@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blocked Page</title>
+    <script type="text/javascript" src="js.js"></script>
+    <link rel="stylesheet" type="text/css" href="css.css" media="screen" /> 
+    <script type="text/javascript">
+        setInterval(goToPage, 1000);
+        function goToPage()
+        {
+            if(get("blockerEnabled", false) == "false")
+                location.href=gup("url");
+        }
+		
+		window.onload = function() {
+			$('blockText').innerHTML = get("blockText", "Shouldn't you be working?");
+            $('disableLink').href = "disable.html?url=" + gup("url");
+		}
+    </script>
+</head>
+<body id="blockedPage">
+    <div id="main">
+        <br /><br />
+        <h1 id="blockText">Shouldn't you be working?</h1>
+        <br /><br />
+    </div>
+    <a id="disableLink" href="#">Click to disable</a>
+</body>
+</html>

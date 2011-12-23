@@ -1,0 +1,59 @@
+<html>
+    <script type="text/javascript" src="js.js"></script>
+    <script>
+        chrome.tabs.onUpdated.addListener(onTabUpdated);
+        chrome.tabs.onSelectionChanged.addListener(onTabSelectionChanged);
+        chrome.pageAction.onClicked.addListener(function(tab){
+            set("blockerEnabled", true);
+            chrome.pageAction.hide(tab.id);
+            onTabSelectionChanged(tab.id, null);
+        });
+
+        function onTabSelectionChanged(tabId, selectInfo)
+        {
+            chrome.tabs.get(tabId, function(tab) { onTabUpdated(tabId, {status:"loading"}, tab); });
+        }
+
+        function onTabUpdated(tabId,changeInfornamtion,tab)
+        {
+            if(changeInfornamtion.status == "loading")
+            {
+                if(get("blockerEnabled", false) == "true")
+                {
+                    chrome.pageAction.hide(tab.id);
+                    if(isBlocked(tab.url))
+                    {
+                        // Blocker is enabled and the current tab is blocked - show blocked page
+                        var redirectUrl = chrome.extension.getURL('blocked.html') + '?url=' + tab.url;
+                        chrome.tabs.update(tabId,{'url':redirectUrl});
+                    }
+                    else
+                    {
+                        // Blocker is enabled and the current tab is not blocked - hide the page action as it's already enabled
+                        chrome.pageAction.hide(tab.id);
+                    }
+                }
+                else
+                {
+                    chrome.pageAction.show(tab.id);
+                    chrome.pageAction.setIcon({tabId: tab.id, path: "icon_open16.png"});
+                    chrome.pageAction.setTitle({tabId: tab.id, title: "Enable Blocker"});
+                }
+            }
+        }
+
+        function isBlocked(tabUrl)
+        {
+            blacklist = JSON.parse(localStorage['blacklist']);
+            for (item in blacklist)
+            {
+                var b = blacklist[item];
+                if(tabUrl.match(b) != null && tabUrl.match(chrome.extension.getURL("")) == null)
+                {
+                    return true;
+                }
+            }
+            return false
+        }
+    </script>
+</html>
